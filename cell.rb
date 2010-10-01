@@ -40,14 +40,14 @@ class Cell
 	end
 
 	def reset_state(newstate)
-		@posibility = newstate
+		@posibilities = newstate
 		@fixed = newstate.size == 1
 	end
 	def remove_posibility(p)
 		if @fixed
 			return
 		end
-		old = @posibilities
+		old = @posibilities.clone
 		if p.is_a? Array
 			@posibilities.subtract(p)
 		else
@@ -56,7 +56,7 @@ class Cell
 		if old != @posibilities
 			# state has changed.
 			changed
-			notify_observers(@posibilites, old, self)
+			notify_observers(@posibilities.clone, old, self)
 		end
 		if @posibilities.size == 1
 			# trigger removals
