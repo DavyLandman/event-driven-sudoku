@@ -8,10 +8,12 @@ class Sudoku
 		@blocks = []
 		@rows = []
 		@columns = []
+		@histories = []
 		initialize_blocks()
 	end
 
 	def start_solving(startValues)
+		@histories = [History.new]
 		for	i in 0...9
 			for j in 0...9
 				if startValues[i][j] != 0
@@ -21,6 +23,14 @@ class Sudoku
 		end
     end
 
+	def is_solved()
+		return @sudoku.all? {|row| row.fixed }
+	end
+
+	def start_guessing()
+		suitable = @sudoku.flatten.min { |c1, c2| c1.posibilities.size <=> c2.posibilities.size }
+		
+	end
 	def print_current()	
 		width = @sudoku.map{|row| row.map { |cell| cell.posibilities.size} }.flatten!.max
     	width = (width *2) + 1
@@ -59,6 +69,9 @@ class Sudoku
 		end
 		@rows.each {|r| r.cells.each { |c| c.set_row(r)}}
 		@columns.each {|col| col.cells.each { |c| c.set_column(col)}}
+		
+		@rows.each {|r| r.cells.each { |c| c.add_observer(self)}}
+		@columns.each {|col| col.cells.each { |c| c.add_observer(self)}}
 	end
 
 	def get_unit(i,j)
@@ -73,5 +86,14 @@ class Sudoku
 			end
 		end
 		return result
+	end
+end
+
+class History
+	def initialize()
+		@history = []
+	end
+	def add_change(new, old, cell)
+		@history << [new, old, cell]
 	end
 end
