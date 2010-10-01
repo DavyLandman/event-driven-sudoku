@@ -5,13 +5,16 @@ class Unit
 	def initialize(members)
 		@members = members
 		@members.each { |m| m.add_observer(self) }
-    @fixed = 0
+		@fixed = 0
 	end
-	def update(newfixedValue)
-    @fixed += 1
-    if (@fixed < 9)
-      @members.each { |m| m.remove_posibility(newfixedValue) }
-    end
+
+	def update(newfixedValue, other=-1)
+		if other == -1
+			@fixed += 1
+			if (@fixed < 9)
+				@members.each { |m| m.remove_posibility(newfixedValue) }
+			end
+		end
 	end
 
   def fixed
@@ -30,9 +33,11 @@ class Unit
     end
     return result
   end
+
   def cells
     return @members
   end
+
   def nonfixed_count
     return 9 - @fixed
   end

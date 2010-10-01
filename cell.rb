@@ -10,43 +10,53 @@ class Cell
 			@fixed = true
 		else
 			@posibilities = Set.new(1..9)
-      @fixed = false
+			@fixed = false
 		end
-    @block = []
-    @row = nil
-    @column = nil
+		@block = []
+		@row = nil
+		@column = nil
 	end
 
-  def set_blocks(block)
-    @block.push(block)
-  end
+	def set_blocks(block)
+		@block.push(block)
+	end
 
-  def set_row(row)
-    @row = row
-  end
+	def set_row(row)
+		@row = row
+	end
 
-  def set_column(column)
-    @column = column
-  end
+	def set_column(column)
+		@column = column
+	end
 
-  def row
-    return @row
-  end
-  def column
-    return @column
-  end
-  def blocks
-    return @block
-  end
+	def row
+		return @row
+	end
+	def column
+		return @column
+	end
+	def blocks
+		return @block
+	end
 
+	def reset_state(newstate)
+		@posibility = newstate
+		@fixed = newstate.size == 1
+	end
 	def remove_posibility(p)
 		if @fixed
 			return
 		end
+		old = @posibilities
 		if p.is_a? Array
 			@posibilities.subtract(p)
 		else
 			@posibilities.subtract([p])
+		end
+		if old != @posibilities
+			# state has changed.
+			changed
+			notify_observers(old, @posibilites)
 		end
 		if @posibilities.size == 1
 			# trigger removals
@@ -60,11 +70,11 @@ class Cell
 		return @posibilities.to_a.sort.join(',')
 	end
 
-  def fixed
-    return @fixed
-  end
+	def fixed
+		return @fixed
+	end
 
-  def posibilities
-    return @posibilities
-  end
+	def posibilities
+		return @posibilities
+	end
 end
