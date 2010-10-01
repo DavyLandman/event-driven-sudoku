@@ -35,7 +35,7 @@ class Sudoku
 		possible_targets = @sudoku.flatten.select { |c| c.posibilities.size > 1}.sort_by { |c1| c1.posibilities.size }
 		possible_targets.each do |suitable|
 			suitable.posibilities.each do |value| 
-				@histories << History.new
+				@histories << History.new(@sudoku)
 				suitable.remove_posibility(suitable.posibilities.to_a - [value])
 				if !is_solved and is_correct
 					start_guessing()
@@ -46,13 +46,6 @@ class Sudoku
 			break if is_solved and is_correct			
 		end
 		print_current if @histories.length < 10
-	end
-
-	def update(newfixedValue, oldValue=-1, sender=nil)
-		if  oldValue != -1 and !@histories.empty?
-			# we have to store history
-			@histories.last.add_change(newfixedValue, oldValue, sender)
-		end
 	end
 
 	def initialize_blocks()
@@ -74,9 +67,6 @@ class Sudoku
 		end
 		@rows.each {|r| r.cells.each { |c| c.set_row(r)}}
 		@columns.each {|col| col.cells.each { |c| c.set_column(col)}}
-		
-		@rows.each {|r| r.cells.each { |c| c.add_observer(self)}}
-		@columns.each {|col| col.cells.each { |c| c.add_observer(self)}}
 	end
 
 	def get_unit(i,j)
@@ -95,15 +85,12 @@ class Sudoku
 end
 
 class History
-	def initialize()
-		@history = []
-	end
-	def add_change(new, old, cell)
-		@history << [new, old, cell]
+	def initialize(sudoku)
+		@history = sudoku.flatten.map { |c| [c, c.posibilities.clone] }
 	end
 	def undo()
-		@history.reverse.each do |change| 
-			change[2].reset_state(change[1])
+		@history.each do |change| 
+			change[0].reset_state(change[1])
 		end
 	end
 end

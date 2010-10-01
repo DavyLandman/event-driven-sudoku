@@ -45,19 +45,12 @@ class Cell
 	end
 	def remove_posibility(p)
 		if @fixed
-			puts "stranger" if p == @posibilities
 			return
 		end
-		old = @posibilities.clone
 		if p.is_a? Array
 			@posibilities.subtract(p)
 		else
 			@posibilities.subtract([p])
-		end
-		if old != @posibilities
-			# state has changed.
-			changed
-			notify_observers(@posibilities.clone, old, self)
 		end
 		if @posibilities.size == 1
 			# trigger removals

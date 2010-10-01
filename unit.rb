@@ -8,12 +8,10 @@ class Unit
 		@fixed = 0
 	end
 
-	def update(newfixedValue, oldValue=-1, sender=nil)
-		if oldValue == -1
-			@fixed += 1
-			if (@fixed < @members.length)
-				@members.each { |m| m.remove_posibility(newfixedValue) }
-			end
+	def update(newfixedValue)
+		@fixed += 1
+		if (@fixed < @members.length)
+			@members.each { |m| m.remove_posibility(newfixedValue) }
 		end
 	end
 
