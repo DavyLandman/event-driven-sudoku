@@ -56,7 +56,7 @@ class Cell
 		if old != @posibilities
 			# state has changed.
 			changed
-			notify_observers(old, @posibilites)
+			notify_observers(@posibilites, old, self)
 		end
 		if @posibilities.size == 1
 			# trigger removals
