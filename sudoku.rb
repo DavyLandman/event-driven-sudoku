@@ -13,7 +13,6 @@ class Sudoku
 	end
 
 	def start_solving(startValues)
-		@histories = [History.new]
 		for	i in 0...9
 			for j in 0...9
 				if startValues[i][j] != 0
@@ -24,29 +23,35 @@ class Sudoku
     end
 
 	def is_solved()
-		return @sudoku.all? {|row| row.fixed }
+		return @sudoku.all? {|row| row.all? { |cell| cell.fixed } }
+	end
+	def is_correct()
+		return (@blocks + @rows + @columns).all? {|u| u.correct? }
 	end
 
+
+
 	def start_guessing()
-		suitable = @sudoku.flatten.min { |c1, c2| c1.posibilities.size <=> c2.posibilities.size }
-		
-	end
-	def print_current()	
-		width = @sudoku.map{|row| row.map { |cell| cell.posibilities.size} }.flatten!.max
-    	width = (width *2) + 1
-    	seperator_line = Array.new(3).map{ Array.new(width * 3).map!{'-'}.join + '+' }.join.chop!
-		for i in 0...9
-			s = ''
-			for j in 0...9
-				s +=  @sudoku[i][j].to_s.center(width)
-				if (j + 1).modulo(3) ==0 && j < 8
-					s += '|'
+		possible_targets = @sudoku.flatten.select { |c| c.posibilities.size > 1}.sort_by { |c1| c1.posibilities.size }
+		possible_targets.each do |suitable|
+			suitable.posibilities.clone.each do |value| 
+				@histories << History.new
+				suitable.remove_posibility(suitable.posibilities.to_a - [value])
+				if !is_solved and is_correct
+					start_guessing()
 				end
+				break if is_solved and is_correct
+				@histories.pop.undo()
 			end
-			puts s
-			if (i + 1).modulo(3) ==0 && i < 8
-				puts  seperator_line
-			end
+			break if is_solved and is_correct			
+		end
+		print_current
+	end
+
+	def update(newfixedValue, oldValue=-1, sender=nil)
+		if  oldValue != -1 and !@histories.empty?
+			# we have to store history
+			@histories.last.add_change(newfixedValue, oldValue, sender)
 		end
 	end
 
@@ -95,5 +100,10 @@ class History
 	end
 	def add_change(new, old, cell)
 		@history << [new, old, cell]
+	end
+	def undo()
+		@history.reverse.each do |change| 
+			change[2].reset_state(change[1])
+		end
 	end
 end
