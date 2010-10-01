@@ -8,30 +8,24 @@ class Unit
 		@fixed = 0
 	end
 
-	def update(newfixedValue, other=-1)
+	def update(newfixedValue, old=-1, sender=nil)
 		if other == -1
 			@fixed += 1
-			if (@fixed < 9)
+			if (@fixed < @members.length)
 				@members.each { |m| m.remove_posibility(newfixedValue) }
 			end
 		end
 	end
 
   def fixed
-    return @fixed == 9
+    return @fixed == @members.length
   end
 
   def opencells
     if fixed
       return nil
     end
-    result = []
-    for i in 0...9
-      if !(@members[i].fixed)
-        result.push(@members[i])
-      end
-    end
-    return result
+  	return @members.find_all {|m| !m.fixed};
   end
 
   def cells
@@ -39,6 +33,6 @@ class Unit
   end
 
   def nonfixed_count
-    return 9 - @fixed
+    return @members.length - @fixed
   end
 end
