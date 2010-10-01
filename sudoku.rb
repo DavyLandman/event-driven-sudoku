@@ -194,7 +194,7 @@ class Sudoku
 		@blocks.push(Unit.new(get_unit(6..8, 3..5)))
 		@blocks.push(Unit.new(get_unit(3..5, 6..8)))
 		@blocks.push(Unit.new(get_unit(6..8, 6..8)))
-    @blocks.each { |b| b.cells.each { |c| c.set_blocks(b)} }
+		@blocks.each { |b| b.cells.each { |c| c.set_blocks(b)} }
 
 
 		for	i in 0...9
