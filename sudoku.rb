@@ -34,7 +34,7 @@ class Sudoku
 	def start_guessing()
 		possible_targets = @sudoku.flatten.select { |c| c.posibilities.size > 1}.sort_by { |c1| c1.posibilities.size }
 		possible_targets.each do |suitable|
-			suitable.posibilities.clone.each do |value| 
+			suitable.posibilities.each do |value| 
 				@histories << History.new
 				suitable.remove_posibility(suitable.posibilities.to_a - [value])
 				if !is_solved and is_correct
@@ -45,7 +45,7 @@ class Sudoku
 			end
 			break if is_solved and is_correct			
 		end
-		print_current
+		print_current if @histories.length < 10
 	end
 
 	def update(newfixedValue, oldValue=-1, sender=nil)

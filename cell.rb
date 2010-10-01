@@ -45,6 +45,7 @@ class Cell
 	end
 	def remove_posibility(p)
 		if @fixed
+			puts "stranger" if p == @posibilities
 			return
 		end
 		old = @posibilities.clone
