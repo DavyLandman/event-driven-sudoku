@@ -6,8 +6,8 @@ class Sudoku
 	def initialize()
 		@sudoku = Array.new(9).map! { Array.new(9).map! { Cell.new() }}
 		@blocks = []
-    @rows = []
-    @columns = []
+		@rows = []
+		@columns = []
 		initialize_blocks()
 	end
 
@@ -166,21 +166,21 @@ class Sudoku
 		end
 	end
 	def print_current()	
-    width = @sudoku.map{|row| row.map { |cell| cell.posibilities.size} }.flatten!.max
-    width = (width *2) + 1
-    seperator_line = Array.new(3).map{ Array.new(width * 3).map!{'-'}.join + '+' }.join.chop!
+		width = @sudoku.map{|row| row.map { |cell| cell.posibilities.size} }.flatten!.max
+    	width = (width *2) + 1
+    	seperator_line = Array.new(3).map{ Array.new(width * 3).map!{'-'}.join + '+' }.join.chop!
 		for i in 0...9
 			s = ''
 			for j in 0...9
 				s +=  @sudoku[i][j].to_s.center(width)
-        if (j + 1).modulo(3) ==0 && j < 8
-          s += '|'
-        end
+				if (j + 1).modulo(3) ==0 && j < 8
+					s += '|'
+				end
 			end
-      puts s
-      if (i + 1).modulo(3) ==0 && i < 8
-          puts  seperator_line
-      end
+			puts s
+			if (i + 1).modulo(3) ==0 && i < 8
+				puts  seperator_line
+			end
 		end
 	end
 
@@ -201,8 +201,8 @@ class Sudoku
 			@rows.push(Unit.new(@sudoku[i]))
 			@columns.push(Unit.new(get_unit(0..8, i)))
 		end
-    @rows.each {|r| r.cells.each { |c| c.set_row(r)}}
-    @columns.each {|col| col.cells.each { |c| c.set_column(col)}}
+		@rows.each {|r| r.cells.each { |c| c.set_row(r)}}
+		@columns.each {|col| col.cells.each { |c| c.set_column(col)}}
 	end
 
 	def get_unit(i,j)
