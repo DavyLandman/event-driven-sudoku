@@ -1,8 +1,8 @@
 require 'observer'
 require 'set'
+require 'ruby-event/lib/ruby-event'
 
 class Cell
-	include Observable
 	
 	def initialize(value= 0)		
 		if (value > 0 && value <= 9)
@@ -16,6 +16,7 @@ class Cell
 		@row = nil
 		@column = nil
 	end
+	event :cell_fixed
 
 	def set_blocks(block)
 		@block.push(block)
@@ -55,8 +56,7 @@ class Cell
 		if @posibilities.size == 1
 			# trigger removals
 			@fixed = true
-			changed
-			notify_observers(@posibilities.to_a[0])
+			cell_fixed(@posibilities.to_a[0])
 		end
 	end
 

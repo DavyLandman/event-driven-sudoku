@@ -4,16 +4,17 @@ class Unit
 
 	def initialize(members)
 		@members = members
-		@members.each { |m| m.add_observer(self) }
+		@members.each do |m| 
+			m.cell_fixed + lambda do |value| 
+				@fixed += 1
+				if (@fixed < @members.length)
+					@members.each { |m| m.remove_posibility(value) }
+				end
+			end
+		end
 		@fixed = 0
 	end
 
-	def update(newfixedValue)
-		@fixed += 1
-		if (@fixed < @members.length)
-			@members.each { |m| m.remove_posibility(newfixedValue) }
-		end
-	end
 
   def fixed
     return @fixed == @members.length
@@ -24,9 +25,6 @@ class Unit
 	return (@members.select{ |m| m.fixed }.map { |m2| m2.posibilities}).uniq!.nil?
   end
   def opencells
-    if fixed
-      return nil
-    end
   	return @members.find_all {|m| !m.fixed};
   end
 
