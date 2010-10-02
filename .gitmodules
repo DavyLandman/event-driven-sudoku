@@ -1,3 +1,0 @@
-[submodule "ruby-event"]
-	path = ruby-event
-	url = git://github.com/snuxoll/ruby-event.git
