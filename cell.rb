@@ -1,6 +1,5 @@
-require 'observer'
 require 'set'
-require 'ruby-event/lib/ruby-event'
+require 'ruby-event'
 
 class Cell
 	

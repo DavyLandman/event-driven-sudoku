@@ -1,14 +1,12 @@
-require 'observer'
-
 class Unit
 
 	def initialize(members)
 		@members = members
 		@members.each do |m| 
-			m.cell_fixed + lambda do |value| 
+			m.cell_fixed + lambda do |sender, value| 
 				@fixed += 1
 				if (@fixed < @members.length)
-					@members.each { |m| m.remove_posibility(value) }
+					@members.each { |x| x.remove_posibility(value) }
 				end
 			end
 		end
