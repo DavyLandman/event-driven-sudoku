@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 $:.unshift("lib/ruby-event/lib")
 $:.unshift("lib/ruby-event")
+$:.unshift(".")
 
 require 'parse_sudoku'
 require 'sudoku'
