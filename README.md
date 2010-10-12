@@ -16,4 +16,5 @@ TODO
 - Be smarter about the selection of which candidates to use while guessing
   (hidden singles are easy to detect)
 - Avoid duplication in the guessing (memoization)
+- Reduce the size `Sudoku.initialize_units` and `Sudoku.get_unit`
 
