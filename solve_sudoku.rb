@@ -7,7 +7,7 @@ require 'sudoku'
 #require 'ruby-prof-0.7.3/lib/ruby-prof'
 class Sudoku
 	def print_current()	
-		width = @sudoku.map{|row| row.map { |cell| cell.posibilities.size} }.flatten!.max
+		width = @sudoku.map{|row| row.map { |cell| cell.possibilities.size} }.flatten!.max
     	width = (width *2) + 1
     	seperator_line = Array.new(3).map{ Array.new(width * 3).map!{'-'}.join + '+' }.join.chop!
 		for i in 0...9

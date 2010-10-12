@@ -58,15 +58,15 @@ class Sudoku
 		@blocks.push(Unit.new(get_unit(6..8, 3..5)))
 		@blocks.push(Unit.new(get_unit(3..5, 6..8)))
 		@blocks.push(Unit.new(get_unit(6..8, 6..8)))
-		@blocks.each { |b| b.cells.each { |c| c.set_blocks(b)} }
+		@blocks.each { |b| b.cells.each { |c| c.block << b} }
 
 
 		for	i in 0...9
 			@rows.push(Unit.new(@sudoku[i]))
 			@columns.push(Unit.new(get_unit(0..8, i)))
 		end
-		@rows.each {|r| r.cells.each { |c| c.set_row(r)}}
-		@columns.each {|col| col.cells.each { |c| c.set_column(col)}}
+		@rows.each {|r| r.cells.each { |c| c.row = r}}
+		@columns.each {|col| col.cells.each { |c| c.column = col}}
 	end
 
 	def get_unit(i,j)
