@@ -16,7 +16,7 @@ class Sudoku
 		for	i in 0...9
 			for j in 0...9
 				if startValues[i][j] != 0
-					@sudoku[i][j].remove_posibility((1..9).to_a - [startValues[i][j]])
+					@sudoku[i][j].remove_possibility((1..9).to_a - [startValues[i][j]])
 				end
 			end
 		end

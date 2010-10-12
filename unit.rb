@@ -6,7 +6,7 @@ class Unit
 			m.cell_fixed + lambda do |sender, value| 
 				@fixed += 1
 				if (@fixed < @cells.length)
-					@cells.each { |x| x.remove_posibility(value) }
+					@cells.each { |x| x.remove_possibility(value) }
 				end
 			end
 		end

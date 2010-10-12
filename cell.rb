@@ -25,7 +25,7 @@ class Cell
 		@fixed = newstate.size == 1
 	end
 
-	def remove_posibility(p)
+	def remove_possibility(p)
 		if not @fixed
 			@possibilities.subtract(p.is_a?(Array) ? p : [p]) 
 			if @possibilities.size == 1
