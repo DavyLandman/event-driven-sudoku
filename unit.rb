@@ -4,18 +4,14 @@ class Unit
 		@cells = cells
 		@cells.each do |m| 
 			m.cell_fixed + lambda do |sender, value| 
-				@fixed += 1
-				if (@fixed < @cells.length)
-					@cells.each { |x| x.remove_possibility(value) }
-				end
+				@cells.each { |x| x.remove_possibility(value) if not x.equal?(sender) }
 			end
 		end
-		@fixed = 0
 	end
 
 
   def fixed
-    return @fixed == @cells.length
+  	return @cells.all { |c| c.fixed }
   end
 
   def correct?
@@ -26,8 +22,4 @@ class Unit
   	return @cells.find_all {|m| !m.fixed};
   end
 
-
-  def nonfixed_count
-    return @cells.length - @fixed
-  end
 end

@@ -28,13 +28,11 @@ class Cell
 	end
 
 	def remove_possibility(p)
-		if not @fixed
-			@possibilities.subtract(p.is_a?(Array) ? p : [p]) 
-			if @possibilities.size == 1
-				# trigger removals
-				@fixed = true
-				cell_fixed(@possibilities.to_a[0])
-			end
+		@possibilities.subtract(p.is_a?(Array) ? p : [p]) 
+		if not @fixed and @possibilities.size == 1
+			# trigger removals
+			@fixed = true
+			cell_fixed(@possibilities.to_a[0])
 		end
 	end
 
