@@ -37,6 +37,6 @@ puts 'First: '
 sd.print_current()
 if !sd.is_solved
 	puts 'Start guessing'
-	sd.start_guessing
+	sd.try_guessing(1)
 	sd.print_current()
 end

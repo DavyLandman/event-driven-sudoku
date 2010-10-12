@@ -5,7 +5,6 @@ require "set"
 class Sudoku
 	def initialize()
 		@sudoku = Array.new(9).map! { Array.new(9).map! { Cell.new() }}
-		@histories = []
 		initialize_units()
 	end
 
@@ -27,23 +26,24 @@ class Sudoku
 		return (@blocks + @rows + @columns).all? {|u| u.correct? }
 	end
 
+	def try_guessing(amount)
+		make_guess(amount)
+	end
 
-
-	def start_guessing()
+	def make_guess(amount)
 		possible_targets = @sudoku.flatten.select { |c| c.possibilities.size > 1}.sort_by { |c1| c1.possibilities.size }
 		possible_targets.each do |suitable|
 			suitable.possibilities.each do |value| 
-				@histories << History.new(@sudoku)
+				snapshot = History.new(@sudoku)
 				suitable.remove_possibility(suitable.possibilities.to_a - [value])
-				if !is_solved and is_correct
-					start_guessing()
+				if !is_solved and is_correct and amount > 0
+					make_guess(amount - 1)
 				end
 				break if is_solved and is_correct
-				@histories.pop.undo()
+				snapshot.restore()
 			end
 			break if is_solved and is_correct			
 		end
-		print_current if @histories.length < 10
 	end
 
 	def initialize_units()
@@ -90,7 +90,7 @@ class History
 	def initialize(sudoku)
 		@history = sudoku.flatten.map { |c| [c, c.possibilities.clone] }
 	end
-	def undo()
+	def restore()
 		@history.each do |change| 
 			change[0].reset_state(change[1])
 		end
