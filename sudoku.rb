@@ -5,12 +5,10 @@ require "set"
 class Sudoku
 	def initialize()
 		@sudoku = Array.new(9).map! { Array.new(9).map! { Cell.new() }}
-		@blocks = []
-		@rows = []
-		@columns = []
 		@histories = []
-		initialize_blocks()
+		initialize_units()
 	end
+
 
 	def start_solving(startValues)
 		for	i in 0...9
@@ -48,7 +46,11 @@ class Sudoku
 		print_current if @histories.length < 10
 	end
 
-	def initialize_blocks()
+	def initialize_units()
+		@blocks = []
+		@rows = []
+		@columns = []
+
 		@blocks.push(Unit.new(get_unit(0..2, 0..2)))
 		@blocks.push(Unit.new(get_unit(3..5, 0..2)))
 		@blocks.push(Unit.new(get_unit(6..8, 0..2)))

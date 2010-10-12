@@ -8,18 +8,20 @@ class Cell
 	event :cell_fixed
 
 	def initialize(value= 0)		
+		initialize_defaults()
 		if (value > 0 && value <= 9)
 			@possibilities = Set.new(value)
 			@fixed = true
-		else
-			@possibilities = Set.new(1..9)
-			@fixed = false
 		end
-		@block = []
-		@row = nil
-		@column = nil
 	end
 
+	def initialize_defaults()
+		@block = []
+		@row = @column = nil
+		@possibilities = Set.new(1..9)
+		@fixed = false
+	end
+	
 	def reset_state(newstate)
 		@possibilities = newstate
 		@fixed = newstate.size == 1
