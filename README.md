@@ -5,7 +5,7 @@ This is a very simple sudoku solver, it uses events to cancel out possible cell
 values, and when this does not result in a solution, it just makes a guess and
 backtracks if it was the wrong guess.
 
-To download and run/fork
+To run/fork
 -------
 - Clone the repository
 - `git submodules`
