@@ -7,7 +7,7 @@ backtracks if it was the wrong guess.
 
 To download and run/fork
 -------
-- Do a git clone
+- Clone the repository
 - `git submodules`
 - `git submodule update`
 
