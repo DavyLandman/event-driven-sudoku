@@ -10,14 +10,15 @@ class Sudoku
 
 
 	def start_solving(startValues)
-		for	i in 0...9
+		# just fill in the values we know
+		for i in 0...9
 			for j in 0...9
 				if startValues[i][j] != 0
 					@sudoku[i][j].remove_possibility((1..9).to_a - [startValues[i][j]])
 				end
 			end
 		end
-    end
+	end
 
 	def is_solved()
 		return @sudoku.all? {|row| row.all? { |cell| cell.fixed } }
