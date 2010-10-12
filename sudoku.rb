@@ -30,11 +30,11 @@ class Sudoku
 
 
 	def start_guessing()
-		possible_targets = @sudoku.flatten.select { |c| c.posibilities.size > 1}.sort_by { |c1| c1.posibilities.size }
+		possible_targets = @sudoku.flatten.select { |c| c.possibilities.size > 1}.sort_by { |c1| c1.possibilities.size }
 		possible_targets.each do |suitable|
-			suitable.posibilities.each do |value| 
+			suitable.possibilities.each do |value| 
 				@histories << History.new(@sudoku)
-				suitable.remove_posibility(suitable.posibilities.to_a - [value])
+				suitable.remove_possibility(suitable.possibilities.to_a - [value])
 				if !is_solved and is_correct
 					start_guessing()
 				end
@@ -88,7 +88,7 @@ end
 
 class History
 	def initialize(sudoku)
-		@history = sudoku.flatten.map { |c| [c, c.posibilities.clone] }
+		@history = sudoku.flatten.map { |c| [c, c.possibilities.clone] }
 	end
 	def undo()
 		@history.each do |change| 
