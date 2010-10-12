@@ -33,10 +33,18 @@ end
 importedsudoku = parse_sudoku(ARGV[0])
 sd = Sudoku.new()
 sd.start_solving(importedsudoku)
-puts 'First: '
-sd.print_current()
-if !sd.is_solved
-	puts 'Start guessing'
-	sd.try_guessing(1)
+if sd.is_solved
+	puts 'Solved purely using events: '
+	sd.print_current()
+else
+	puts 'We have to make a guess to solve this'
+	guess_count = 0
+	while not sd.is_solved do
+		guess_count += 1
+		puts "Trying with #{guess_count} guess(es)"
+		sd.try_guessing(guess_count)
+	end
+	puts "We solved the sudoku using events and #{guess_count} guesses"
 	sd.print_current()
 end
+
