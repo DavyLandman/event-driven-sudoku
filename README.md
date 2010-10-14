@@ -8,7 +8,7 @@ backtracks if it was the wrong guess.
 To run/fork
 -------
 - Clone the repository
-- `git submodules`
+- `git submodule init`
 - `git submodule update`
 
 TODO
