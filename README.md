@@ -10,6 +10,8 @@ To run/fork
 - Clone the repository
 - `git submodule init`
 - `git submodule update`
+- windows: `ruby solve_sudoku.rb sudokus\fiendish.sraw`
+- unix: `./solve_sudoku.rb sudokus/fiendish.sraw`
 
 TODO
 ------
