@@ -26,12 +26,20 @@ class Sudoku
 	def is_correct()
 		return (@blocks + @rows + @columns).all? {|u| u.correct? }
 	end
+	def all_units
+		return (@blocks + @rows + @columns)
+	end
+	
+	def try_removing_singles()
+		all_units.each { |u| u.remove_singles() }
+	end
 
 	def try_guessing(amount)
 		make_guess(amount)
 	end
 
 	def make_guess(amount)
+		try_removing_singles()
 		possible_targets = @sudoku.flatten.select { |c| c.possibilities.size > 1}.sort_by { |c1| c1.possibilities.size }
 		possible_targets.each do |suitable|
 			suitable.possibilities.each do |value| 

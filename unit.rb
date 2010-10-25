@@ -22,4 +22,16 @@ class Unit
   	return @cells.find_all {|m| !m.fixed};
   end
 
+  def remove_singles()
+  	candidates = self.opencells
+    candidates = candidates.map {|c| 
+	  [c, candidates.find_all {|c_other| (c.possibilities == c_other.possibilities)}] }
+	  .delete_if { |p| p[0].possibilities.size != p[1].size  }
+	candidates.each do |c|
+      hiddencells = c.flatten
+      (@cells - hiddencells).each { |o|
+	  o.remove_possibility(hiddencells.first.possibilities.to_a) }
+	end
+
+  end
 end
